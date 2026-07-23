@@ -1,6 +1,7 @@
 package com.vinyas.backend.sevice;
 
 import com.vinyas.backend.entity.Url;
+import com.vinyas.backend.exception.ShortUrlNotFoundException;
 import com.vinyas.backend.repository.UrlRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class UrlService {
             urlRepository.save(urlEntity);
             return urlEntity.getOriginalUrl();
         }
-        return null;
+        throw new ShortUrlNotFoundException("Short URL not found");
     }
 
     public void increaseClickCount(String shortCode) {
