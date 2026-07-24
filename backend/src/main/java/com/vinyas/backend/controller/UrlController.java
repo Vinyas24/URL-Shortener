@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "URL Management")
 public class UrlController {
     private UrlService urlService;
+    @Value("${app.base-url}")
+    private String baseUrl;
 
     @Operation(summary = "Create short URL",description = "Creates a shortened URL for the provided original URL.")
     @ApiResponses(value = {
@@ -25,7 +28,7 @@ public class UrlController {
     public ShortenUrlResponse createUrl(@Valid @RequestBody ShortenUrlRequest shortenUrlRequest) {
         ShortenUrlResponse shortenUrlResponse = new ShortenUrlResponse();
         String shortCode = urlService.shortenUrl(shortenUrlRequest.getOriginalUrl());
-        shortenUrlResponse.setShortUrl("http://localhost:8080/"+shortCode);
+        shortenUrlResponse.setShortUrl(baseUrl +shortCode);
         return shortenUrlResponse;
     }
 
