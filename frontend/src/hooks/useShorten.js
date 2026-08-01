@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { createShortUrl } from '../utils/api'
 
-
 export function useShorten() {
   const [status, setStatus] = useState('idle')
   const [shortUrl, setShortUrl] = useState('')
