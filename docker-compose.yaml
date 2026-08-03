@@ -1,18 +1,6 @@
 version: "3.9"
 
 services:
-  postgres:
-    image: postgres:16
-    container_name: url-shortener-db
-    environment:
-      POSTGRES_DB: url_shortener
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
   api:
     build:
       context: ./backend
@@ -21,11 +9,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DB_URL: jdbc:postgresql://postgres:5432/url_shortener
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres123
-    depends_on:
-      - postgres
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
 
   web:
     build:
@@ -38,6 +24,3 @@ services:
       VITE_API_TARGET: http://api:8080
     depends_on:
       - api
-
-volumes:
-  postgres_data:
