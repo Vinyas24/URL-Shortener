@@ -1,9 +1,11 @@
 package com.vinyas.backend.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Configuration
 public class CorsConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -12,7 +14,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(
-                                "http:localhost:5173",
+                                "http://localhost:5173",
                                 "https://sh0rt-url.vercel.app"
                         ).allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
