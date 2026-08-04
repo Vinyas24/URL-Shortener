@@ -7,14 +7,14 @@ export function useShorten() {
   const [errorMessage, setErrorMessage] = useState('')
   const [fieldErrors, setFieldErrors] = useState({})
 
-  async function shorten(originalUrl) {
+  async function shorten(originalUrl, customCode) {
     setStatus('loading')
     setShortUrl('')
     setErrorMessage('')
     setFieldErrors({})
 
     try {
-      const { data, status: httpStatus } = await createShortUrl(originalUrl)
+      const { data, status: httpStatus } = await createShortUrl(originalUrl, customCode)
 
       if (httpStatus === 200) {
         setShortUrl(data.shortUrl)
@@ -22,6 +22,10 @@ export function useShorten() {
       } else if (httpStatus === 400) {
         setFieldErrors(data.errors || {})
         setErrorMessage(data.message || 'Validation failed.')
+        setStatus('error')
+      } else if (httpStatus === 409) {
+        // Custom code already taken — surface as a field-level error
+        setFieldErrors({ customCode: data.message || 'This custom code is already taken.' })
         setStatus('error')
       } else {
         setErrorMessage(data.message || 'An unexpected error occurred.')

@@ -102,3 +102,54 @@
     width: 100%;
   }
 }
+
+/* ── Custom code toggle ── */
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: none;
+  border: none;
+  padding: var(--space-1) var(--space-2);
+  margin-left: calc(-1 * var(--space-2));
+  color: var(--color-text-muted);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-base), background var(--transition-base);
+  width: fit-content;
+}
+
+.toggleBtn:hover:not(:disabled) {
+  color: var(--color-primary);
+  background: rgba(24, 167, 24, 0.08);
+}
+
+.toggleBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chevron {
+  transition: transform var(--transition-base);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Custom code collapsible row ── */
+.customCodeRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  animation: slideDown 0.18s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+

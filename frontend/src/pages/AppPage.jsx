@@ -37,7 +37,7 @@ export default function AppPage() {
 
           <div className={`glass ${styles.card}`}>
             <UrlForm
-              onSubmit={shorten}
+              onSubmit={(url, customCode) => shorten(url, customCode)}
               status={status}
               fieldErrors={fieldErrors}
               errorMessage={errorMessage}
