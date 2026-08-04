@@ -27,7 +27,7 @@ public class UrlController {
     @PostMapping("/")
     public ShortenUrlResponse createUrl(@Valid @RequestBody ShortenUrlRequest shortenUrlRequest) {
         ShortenUrlResponse shortenUrlResponse = new ShortenUrlResponse();
-        String shortCode = urlService.shortenUrl(shortenUrlRequest.getOriginalUrl());
+        String shortCode = urlService.shortenUrl(shortenUrlRequest.getOriginalUrl(), shortenUrlRequest.getCustomCode());
         shortenUrlResponse.setShortUrl(baseUrl +shortCode);
         return shortenUrlResponse;
     }

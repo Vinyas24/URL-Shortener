@@ -1,7 +1,7 @@
 package com.vinyas.backend.service;
 
 import com.vinyas.backend.entity.Url;
-import com.vinyas.backend.exception.ShortUrlNotFoundException;
+import com.vinyas.backend.exception.*;
 import com.vinyas.backend.repository.UrlRepository;
 import com.vinyas.backend.sevice.UrlService;
 import org.junit.jupiter.api.Test;
@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,19 +33,42 @@ class UrlServiceTest {
     void shouldCreateShortUrlIfOriginalUrlDoesNotExist() {
         String originalUrl = "https://github.com";
         when(urlRepository.findByOriginalUrl(originalUrl)).thenReturn(Optional.empty());
-        urlService.shortenUrl(originalUrl);
+        urlService.shortenUrl(originalUrl, null);
         verify(urlRepository, times(1)).save(urlCaptor.capture());
         Url savedUrl = urlCaptor.getValue();
         assertNotNull(savedUrl.getShortCode());
         assertEquals(originalUrl, savedUrl.getOriginalUrl());
         assertEquals(6, savedUrl.getShortCode().length());
     }
+    
+    @Test
+    void shouldCreateCustomShortCode() {
+        String originalUrl = "https://github.com";
+        String customCode = "github";
+        when(urlRepository.findByOriginalUrl(originalUrl)).thenReturn(Optional.empty());
+        when(urlRepository.existsByShortCode(customCode)).thenReturn(false);
+        urlService.shortenUrl(originalUrl, customCode);
+        verify(urlRepository, times(1)).save(urlCaptor.capture());
+        Url savedUrl = urlCaptor.getValue();
+        assertNotNull(savedUrl.getShortCode());
+        assertEquals(originalUrl, savedUrl.getOriginalUrl());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCustomCodeExists() {
+        String originalUrl = "https://github.com";
+        String customCode = "github";
+        when(urlRepository.findByOriginalUrl(originalUrl)).thenReturn(Optional.empty());
+        when(urlRepository.existsByShortCode(customCode)).thenReturn(true);
+        assertThrows(ShortCodeAlreadyExistsException.class, () -> urlService.shortenUrl(originalUrl, customCode));
+        verify(urlRepository, never()).save(any(Url.class));
+    }
 
     @Test
     void shouldReturnExistingShortCode() {
         Url existingUrl = new Url("https://example.com", "abc123");
         when(urlRepository.findByOriginalUrl(existingUrl.getOriginalUrl())).thenReturn(Optional.of(existingUrl));
-        String shortUrl = urlService.shortenUrl(existingUrl.getOriginalUrl());
+        String shortUrl = urlService.shortenUrl(existingUrl.getOriginalUrl(), existingUrl.getShortCode());
         verify(urlRepository, never()).save(any(Url.class));
         assertEquals("abc123", shortUrl);
     }

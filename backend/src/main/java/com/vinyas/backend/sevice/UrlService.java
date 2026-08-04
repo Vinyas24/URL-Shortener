@@ -1,6 +1,7 @@
 package com.vinyas.backend.sevice;
 
 import com.vinyas.backend.entity.Url;
+import com.vinyas.backend.exception.ShortCodeAlreadyExistsException;
 import com.vinyas.backend.exception.ShortUrlNotFoundException;
 import com.vinyas.backend.repository.UrlRepository;
 import org.slf4j.Logger;
@@ -19,11 +20,18 @@ public class UrlService {
         this.urlRepository = urlRepository;
     }
 
-    public String shortenUrl(String url) {
+    public String shortenUrl(String url, String customCode) {
         Optional<Url> originalUrl = urlRepository.findByOriginalUrl(url);
         if (originalUrl.isEmpty()) {
-            String shortCode = generateShortCode();
-            logger.info("Short code is created: {}", shortCode);
+            String shortCode = customCode;
+            if (customCode == null || customCode.isBlank()) {
+                shortCode = generateShortCode();
+                logger.info("Short code is created: {}", shortCode);
+            } else if (urlRepository.existsByShortCode(customCode)) {
+                throw new ShortCodeAlreadyExistsException("Custom already exists: " + customCode);
+            }
+            if (shortCode.equals(customCode))
+                logger.info("Custom code is created: {}", customCode);
             Url shortUrl = new Url(url, shortCode);
             urlRepository.save(shortUrl);
             return shortCode;
