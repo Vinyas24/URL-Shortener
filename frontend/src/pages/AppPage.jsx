@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link2 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import UrlForm from '../components/UrlForm'
 import ResultCard from '../components/ResultCard'
@@ -17,16 +16,21 @@ export default function AppPage() {
   }
 
   return (
-    <div className="page-wrapper">
-      <Navbar />
+    <div className={styles.root}>
+
+      <Navbar transparent />
+
+      <div className={styles.blob1} aria-hidden="true" />
+      <div className={styles.blob2} aria-hidden="true" />
+      <div className={styles.blob3} aria-hidden="true" />
+
+      <div className={styles.grid} aria-hidden="true" />
+      <div className={styles.grain} aria-hidden="true" />
 
       <main className={styles.main}>
         <div className={`container ${styles.content}`}>
 
           <div className={styles.header}>
-            <div className={styles.iconBadge} aria-hidden="true">
-              <Link2 size={28} />
-            </div>
             <h1 className={styles.title}>
               Shorten a <span className="gradient-text">URL</span>
             </h1>
@@ -55,18 +59,6 @@ export default function AppPage() {
             )}
           </div>
 
-          <div className={styles.steps}>
-            {[
-              { n: '1', label: 'Paste your URL' },
-              { n: '2', label: 'Click Shorten' },
-              { n: '3', label: 'Share your link' },
-            ].map(({ n, label }) => (
-              <div key={n} className={styles.step}>
-                <span className={styles.stepNum}>{n}</span>
-                <span className={styles.stepLabel}>{label}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </main>
 

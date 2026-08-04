@@ -1,74 +1,50 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Link2, Zap } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import Navbar from '../components/Navbar'
 import styles from '../styles/LandingPage.module.css'
 
 export default function LandingPage() {
   return (
     <div className={styles.root}>
-      <Navbar />
 
-      <div className={styles.orb1} aria-hidden="true" />
-      <div className={styles.orb2} aria-hidden="true" />
-      <div className={styles.orb3} aria-hidden="true" />
+      <Navbar transparent />
 
-      <section className={styles.hero}>
-        <div className={`container ${styles.grid}`}>
+      <div className={styles.blob1} aria-hidden="true" />
+      <div className={styles.blob2} aria-hidden="true" />
+      <div className={styles.blob3} aria-hidden="true" />
+      <div className={styles.blob4} aria-hidden="true" />
 
-          <div className={styles.copy}>
-            <div className={styles.tag}>
-              <Link2 size={12} />
-              <span>URL Shortener</span>
-            </div>
+      <div className={styles.grid} aria-hidden="true" />
+      <div className={styles.grain} aria-hidden="true" />
 
-            <h1 className={styles.headline}>
-              Paste long.<br />
-              <span className={styles.accent}>Get short.</span>
-            </h1>
+      <main className={styles.hero}>
+        <div className={styles.inner}>
 
-            <p className={styles.sub}>
-              Turn any URL into a clean, shareable link in one click.
-              No account. No friction.
-            </p>
+          <h1 className={styles.headline}>
+            <span className={styles.line1}>Paste long.</span>
+            <span className={styles.line2}>
+              Get&nbsp;<span className={styles.accent}>short.</span>
+            </span>
+          </h1>
 
-            <Link to="/app" className={styles.cta} id="hero-cta">
-              Start for free
-              <ArrowRight size={18} />
-            </Link>
-          </div>
+          <p className={styles.sub}>
+            Turn any URL into a clean, shareable link in seconds.
+            <br className={styles.br} />
+            No account needed. No friction.
+          </p>
 
-          <div className={styles.visual}>
-            <div className={styles.cardGlow} aria-hidden="true" />
-            <div className={styles.card}>
-              <div className={styles.cardSection}>
-                <span className={styles.cardLabel}>Before</span>
-                <span className={styles.cardLong}>
-                  https://some-very-long-website.com/blog/article/how-to-make-urls-shorter
-                </span>
-              </div>
-
-              <div className={styles.cardMid}>
-                <div className={styles.midLine} />
-                <span className={styles.midIcon}><Zap size={14} /></span>
-                <div className={styles.midLine} />
-              </div>
-
-              <div className={styles.cardSection}>
-                <span className={`${styles.cardLabel} ${styles.cardLabelAfter}`}>After</span>
-                <span className={styles.cardShort}>snip.lk/<strong>WDFZIz</strong></span>
-              </div>
-            </div>
+          <div className={styles.actions}>
+            <Button asChild className={styles.cta} id="hero-cta">
+              <Link to="/app">
+                Shorten your link 
+              </Link>
+            </Button>
           </div>
 
         </div>
-      </section>
+      </main>
 
-      <footer className={styles.footer}>
-        <div className={`container ${styles.footerInner}`}>
-          <span className={styles.footerBrand}>Sniplink</span>
-          <span className={styles.footerCopy}>Built with Spring Boot + React</span>
-        </div>
-      </footer>
     </div>
   )
 }

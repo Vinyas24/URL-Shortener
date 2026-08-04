@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link2, Zap, Pencil, ChevronDown } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import Spinner from './Spinner'
 import styles from '../styles/UrlForm.module.css'
 
@@ -20,15 +22,15 @@ export default function UrlForm({ onSubmit, status, fieldErrors, errorMessage })
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
-      {/* ── Long URL row ── */}
+
       <div className={styles.inputRow}>
         <div className={`${styles.inputWrapper} ${hasUrlError ? styles.inputError : ''}`}>
-          <Link2 className={styles.inputIcon} size={18} />
-          <input
+          <Link2 className={styles.inputIcon} size={16} />
+          <Input
             id="url-input"
             type="url"
-            className={styles.input}
-            placeholder="Paste your long URL here..."
+            className={styles.urlInput}
+            placeholder="Paste your long URL here…"
             value={url}
             onChange={e => setUrl(e.target.value)}
             disabled={isLoading}
@@ -38,25 +40,25 @@ export default function UrlForm({ onSubmit, status, fieldErrors, errorMessage })
             aria-describedby={hasUrlError ? 'url-error' : undefined}
           />
         </div>
-        <button
+        <Button
           id="shorten-btn"
           type="submit"
-          className={`btn-primary ${styles.submitBtn}`}
+          className={styles.submitBtn}
           disabled={isLoading || !url.trim()}
           aria-label="Shorten URL"
         >
           {isLoading ? (
             <>
-              <Spinner size={17} />
-              <span>Shortening…</span>
+              <Spinner size={15} />
+              Shortening…
             </>
           ) : (
             <>
-              <Zap size={17} />
-              <span>Shorten</span>
+              <Zap size={15} />
+              Shorten
             </>
           )}
-        </button>
+        </Button>
       </div>
 
       {hasUrlError && (
@@ -65,34 +67,34 @@ export default function UrlForm({ onSubmit, status, fieldErrors, errorMessage })
         </p>
       )}
 
-      {/* ── Custom code toggle ── */}
-      <button
+      <Button
         type="button"
         id="custom-code-toggle"
+        variant="ghost"
+        size="sm"
         className={styles.toggleBtn}
         onClick={() => setShowCustomCode(v => !v)}
         aria-expanded={showCustomCode}
         aria-controls="custom-code-row"
         disabled={isLoading}
       >
-        <Pencil size={14} />
-        <span>Custom code</span>
+        <Pencil size={13} />
+        Custom code
         <ChevronDown
-          size={14}
+          size={13}
           className={`${styles.chevron} ${showCustomCode ? styles.chevronOpen : ''}`}
         />
-      </button>
+      </Button>
 
-      {/* ── Custom code input (collapsible) ── */}
       {showCustomCode && (
         <div id="custom-code-row" className={styles.customCodeRow}>
           <div className={`${styles.inputWrapper} ${hasCustomCodeError ? styles.inputError : ''}`}>
-            <Pencil className={styles.inputIcon} size={16} />
-            <input
+            <Pencil className={styles.inputIcon} size={14} />
+            <Input
               id="custom-code-input"
               type="text"
-              className={styles.input}
-              placeholder="my-brand (3–15 chars, letters, numbers, - or _)"
+              className={styles.urlInput}
+              placeholder="(3–15 chars, letters, numbers, - or _)"
               value={customCode}
               onChange={e => setCustomCode(e.target.value)}
               disabled={isLoading}

@@ -24,7 +24,6 @@ export function useShorten() {
         setErrorMessage(data.message || 'Validation failed.')
         setStatus('error')
       } else if (httpStatus === 409) {
-        // Custom code already taken — surface as a field-level error
         setFieldErrors({ customCode: data.message || 'This custom code is already taken.' })
         setStatus('error')
       } else {

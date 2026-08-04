@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { Copy, Check, ExternalLink, RotateCcw } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
 import styles from '../styles/ResultCard.module.css'
 
 export default function ResultCard({ shortUrl, onReset, onCopied }) {
@@ -8,9 +11,6 @@ export default function ResultCard({ shortUrl, onReset, onCopied }) {
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(shortUrl)
-      setCopied(true)
-      onCopied?.()
-      setTimeout(() => setCopied(false), 2500)
     } catch {
       const el = document.createElement('textarea')
       el.value = shortUrl
@@ -18,20 +18,22 @@ export default function ResultCard({ shortUrl, onReset, onCopied }) {
       el.select()
       document.execCommand('copy')
       document.body.removeChild(el)
-      setCopied(true)
-      onCopied?.()
-      setTimeout(() => setCopied(false), 2500)
     }
+    setCopied(true)
+    onCopied?.()
+    setTimeout(() => setCopied(false), 2500)
   }
 
   return (
-    <div className={`glass ${styles.card}`} role="region" aria-label="Shortened URL result">
+    <div className={styles.card} role="region" aria-label="Shortened URL result">
       <div className={styles.header}>
-        <div className={styles.successBadge}>
-          <Check size={14} />
-          <span>Link created!</span>
-        </div>
+        <Badge className={styles.successBadge}>
+          <Check size={11} />
+          Link created!
+        </Badge>
       </div>
+
+      <Separator className={styles.sep} />
 
       <div className={styles.urlRow}>
         <a
@@ -42,39 +44,43 @@ export default function ResultCard({ shortUrl, onReset, onCopied }) {
           id="result-short-url"
           aria-label={`Short URL: ${shortUrl}`}
         >
-          {shortUrl}
-          <ExternalLink size={14} className={styles.externalIcon} />
+          <span className={styles.urlText}>{shortUrl}</span>
+          <ExternalLink size={13} className={styles.externalIcon} />
         </a>
 
-        <button
+        <Button
           id="copy-btn"
-          className={`${styles.copyBtn} ${copied ? styles.copied : ''}`}
+          variant={copied ? 'default' : 'outline'}
+          size="sm"
           onClick={handleCopy}
+          className={copied ? styles.copiedBtn : styles.copyBtn}
           aria-label={copied ? 'Copied!' : 'Copy short URL to clipboard'}
         >
           {copied ? (
             <>
-              <Check size={16} />
-              <span>Copied!</span>
+              <Check size={14} />
+              Copied!
             </>
           ) : (
             <>
-              <Copy size={16} />
-              <span>Copy</span>
+              <Copy size={14} />
+              Copy
             </>
           )}
-        </button>
+        </Button>
       </div>
 
-      <button
+      <Button
         id="shorten-another-btn"
-        className={styles.resetLink}
+        variant="ghost"
+        size="sm"
         onClick={onReset}
+        className={styles.resetBtn}
         aria-label="Shorten another URL"
       >
         <RotateCcw size={13} />
         Shorten another URL
-      </button>
+      </Button>
     </div>
   )
 }

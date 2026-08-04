@@ -1,57 +1,83 @@
 .nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  padding: var(--space-4) 0;
-  background: rgba(216, 216, 212, 0.82);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border-bottom: 1px solid var(--color-border);
+  width: 100%;
 }
 
 .inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 80px;
+}
+
+.navTransparent {
+  background: rgba(5, 5, 16, 0.15);
+  backdrop-filter: blur(28px) saturate(2.2);
+  -webkit-backdrop-filter: blur(28px) saturate(2.2);
+}
+
+.navSolid {
+  background: rgba(8, 8, 15, 0.82);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 0;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.75rem;
   text-decoration: none;
-  transition: opacity var(--transition-fast);
-}
-
-.logo:hover {
-  opacity: 0.85;
+  color: var(--color-text-primary);
 }
 
 .logoIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  background: linear-gradient(135deg, var(--color-violet), var(--color-violet-dark));
-  border-radius: var(--radius-md);
-  color: #fff;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--color-violet), var(--color-cyan));
+  border-radius: 11px;
+  color: #000000;
   flex-shrink: 0;
-  box-shadow: 0 2px 12px rgba(24, 167, 24, 0.30);
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.50);
 }
 
 .logoText {
-  font-size: var(--font-size-lg);
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--color-violet), var(--color-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.02em;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fff;
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 0.75rem;
+}
+
+.ctaTransparent {
+  height: 2.5rem !important;
+  padding: 0 1.25rem !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  font-family: var(--font-family) !important;
+  background: rgba(255, 255, 255, 0.10) !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  color: #fff !important;
+  backdrop-filter: blur(8px);
+  letter-spacing: -0.01em !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.ctaTransparent:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.32) !important;
 }
