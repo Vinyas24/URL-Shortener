@@ -13,11 +13,11 @@ export default function Navbar({ transparent = false }) {
       aria-label="Main navigation"
     >
       <div className={`container ${styles.inner}`}>
-        <Link to="/" className={styles.logo} aria-label="Sniplink home">
+        <Link to="/" className={styles.logo} aria-label="ShortURL home">
           <span className={styles.logoIcon}>
-            <Scissors size={17} />
+            <Scissors size={27} />
           </span>
-          <span className={styles.logoText}>Sniplink</span>
+          <span className={styles.logoText}>ShortURL</span>
         </Link>
 
         <div className={styles.actions}>
